@@ -24,18 +24,18 @@
   }
   .topbar-brand { display: flex; align-items: center; gap: 10px; padding-right: 18px; border-right: 1.5px solid var(--tb-sep); flex-shrink: 0; }
   .logo-icon { width: 32px; height: 32px; border-radius: 7px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 1px 4px rgba(90,45,0,0.25); flex-shrink: 0; }
-  .app-name { font-size: 14px; font-weight: 800; color: var(--burgundy); white-space: nowrap; }
+  .app-name { font-size: 16px; font-weight: 800; color: var(--burgundy); white-space: nowrap; }
 
   .topbar-datetime { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 18px; border-right: 1.5px solid var(--tb-sep); line-height: 1.25; flex-shrink: 0; }
-  .topbar-datetime .dt-duong { font-size: 12px; font-weight: 700; color: var(--tb-text); white-space: nowrap; }
-  .topbar-datetime .dt-am   { font-size: 10.5px; color: var(--tb-lunar); font-weight: 500; white-space: nowrap; }
+  .topbar-datetime .dt-duong { font-size: 15px; font-weight: 700; color: var(--tb-text); white-space: nowrap; }
+  .topbar-datetime .dt-am   { font-size: 15px; color: var(--tb-lunar); font-weight: 500; white-space: nowrap; }
 
   .topbar-nav { display: flex; align-items: center; gap: 2px; padding: 0 12px; flex: 1; }
-  .topbar-nav-item { padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12.5px; font-weight: 600; color: var(--tb-text); white-space: nowrap; }
+  .topbar-nav-item { padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 15px; font-weight: 600; color: var(--tb-text); white-space: nowrap; }
   .topbar-nav-item.active { background: rgba(255,255,255,0.5); color: var(--burgundy); }
 
   .topbar-actions { display: flex; align-items: center; gap: 6px; margin-left: auto; flex-shrink: 0; }
-  .tb-action { padding: 6px 13px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; color: var(--tb-text); border: 1.5px solid rgba(90,45,0,0.22); background: rgba(255,255,255,0.3); font-family: inherit; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
+  .tb-action { padding: 6px 13px; border-radius: 6px; cursor: pointer; font-size: 15px; font-weight: 600; color: var(--tb-text); border: 1.5px solid rgba(90,45,0,0.22); background: rgba(255,255,255,0.3); font-family: inherit; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
 
   /* ── ICON BTN (chuông) ── */
   .icon-btn { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.3); border: 1.5px solid rgba(90,45,0,0.22); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; flex-shrink: 0; }
@@ -70,8 +70,8 @@
   .user-block:hover { background: rgba(255,255,255,0.4); }
   .avatar { width: 34px; height: 34px; background: var(--tb-logo-text); color: var(--tb-bg); border-radius: 8px; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .user-info { display: flex; flex-direction: column; line-height: 1.2; }
-  .user-info .user-name { font-size: 11px; font-weight: 700; color: var(--tb-text); white-space: nowrap; }
-  .user-info .user-role { font-size: 9.5px; color: var(--tb-lunar); font-weight: 500; white-space: nowrap; }
+  .user-info .user-name { font-size: 15px; font-weight: 700; color: var(--tb-text); white-space: nowrap; }
+  .user-info .user-role { font-size: 15px; color: var(--tb-lunar); font-weight: 500; white-space: nowrap; }
   .user-chevron { width: 14px; height: 14px; color: var(--tb-lunar); flex-shrink: 0; transition: transform 0.18s; }
   .user-block.open .user-chevron { transform: rotate(180deg); }
 
@@ -85,29 +85,46 @@
     pointer-events: none; transition: opacity 0.18s ease, transform 0.18s ease;
   }
   .notify-dropdown.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
-  .nd-header { display: flex; align-items: center; justify-content: space-between; padding: 13px 16px 10px; border-bottom: 1px solid #f0ece4; }
-  .nd-title { font-size: 15px; font-weight: 800; color: #2c1a00; }
-  .nd-mark-all { font-size: 11px; font-weight: 600; color: var(--green-main); cursor: pointer; padding: 3px 7px; border-radius: 5px; transition: background 0.12s; }
-  .nd-mark-all:hover { background: #e8f5ee; }
+  .nd-header { padding: 13px 16px 0; border-bottom: 1px solid #f0ece4; }
+  .nd-header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .nd-title { font-size: 20px; font-weight: 800; color: #2c1a00; }
+  .nd-settings-wrapper { position: relative; }
+  .nd-settings-btn { width: 32px; height: 32px; border-radius: 50%; background: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+  .nd-settings-btn:hover { background: #f0ece4; }
+  .nd-settings-btn svg { width: 18px; height: 18px; color: #5a2d00; }
+  .nd-settings-menu { position: absolute; top: calc(100% + 6px); right: 0; width: 230px; background: #fff; border-radius: 10px; box-shadow: 0 6px 30px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.07); border: 1px solid rgba(0,0,0,0.07); overflow: hidden; z-index: 300; opacity: 0; transform: translateY(-6px) scale(0.97); transform-origin: top right; pointer-events: none; transition: opacity 0.15s ease, transform 0.15s ease; }
+  .nd-settings-menu.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+  .nd-settings-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; font-size: 15px; font-weight: 500; color: #3a2000; cursor: pointer; transition: background 0.12s; }
+  .nd-settings-item:hover { background: #fdf8ee; }
+  .nd-settings-item svg { width: 16px; height: 16px; color: #8b4a00; flex-shrink: 0; }
+  .nd-tabs { display: flex; gap: 2px; padding-bottom: 0; }
+  .nd-tab { font-size: 15px; font-weight: 700; color: #a08060; cursor: pointer; padding: 7px 12px; border-radius: 0; transition: all 0.15s; border-bottom: 2.5px solid transparent; white-space: nowrap; }
+  .nd-tab.active { color: var(--burgundy); border-bottom-color: var(--burgundy); }
+  .nd-tab:hover:not(.active) { color: #5a2d00; }
+  .nd-tab #unreadCount { font-size: 9px; font-weight: 800; color: #fff; background: #c0392b; border-radius: 20px; padding: 1px 5px; margin-left: 3px; vertical-align: middle; }
   .nd-list { max-height: 480px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #e0d5c0 transparent; }
-  .nd-group-label { padding: 8px 14px 4px; font-size: 10px; font-weight: 800; color: #b09070; letter-spacing: 0.8px; text-transform: uppercase; background: #faf7f2; border-bottom: 1px solid #f0ece4; }
+  .nd-group-label { padding: 8px 14px 4px; font-size: 12px; font-weight: 800; color: #b09070; letter-spacing: 0.8px; text-transform: uppercase; background: #faf7f2; border-bottom: 1px solid #f0ece4; }
+  .nd-group-label.urgent { color: #c0392b; background: #fff5f5; border-bottom-color: #fde0e0; }
   .nd-item { display: flex; align-items: flex-start; gap: 11px; padding: 12px 14px; border-bottom: 1px solid #f5f0e8; transition: background 0.12s; position: relative; cursor: default; }
   .nd-item:last-child { border-bottom: none; }
   .nd-item:hover { background: #fdf8ee; }
   .nd-item.unread { background: #fffcf0; }
   .nd-item.unread:hover { background: #fef6d6; }
+  .nd-item.urgent-item { background: #fff8f8; }
+  .nd-item.urgent-item:hover { background: #fff0f0; }
   .nd-actor { position: relative; flex-shrink: 0; }
-  .nd-actor-avatar { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: white; letter-spacing: 0.2px; }
-  .nd-reaction-badge { position: absolute; bottom: -4px; right: -4px; width: 20px; height: 20px; border-radius: 50%; background: white; border: 2px solid white; display: flex; align-items: center; justify-content: center; font-size: 11px; line-height: 1; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+  .nd-actor-avatar { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: white; letter-spacing: 0.2px; }
+  .nd-reaction-badge { position: absolute; bottom: -4px; right: -4px; width: 20px; height: 20px; border-radius: 50%; background: white; border: 2px solid white; display: flex; align-items: center; justify-content: center; font-size: 13px; line-height: 1; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
   .nd-content { flex: 1; min-width: 0; }
-  .nd-text { font-size: 12.5px; color: #2c1a00; line-height: 1.5; font-weight: 400; }
+  .nd-text { font-size: 14.5px; color: #2c1a00; line-height: 1.5; font-weight: 400; }
   .nd-text strong { font-weight: 700; }
   .nd-text .ref { color: #7a5020; font-weight: 600; font-style: italic; }
-  .nd-time { margin-top: 3px; font-size: 10.5px; color: #a08060; font-weight: 500; }
+  .nd-time { margin-top: 3px; font-size: 12.5px; color: #a08060; font-weight: 500; }
   .nd-time.fresh { color: var(--green-main); font-weight: 700; }
   .nd-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green-main); flex-shrink: 0; margin-top: 18px; }
+  .nd-dot.red { background: #c0392b; }
   .nd-footer { padding: 9px 16px; border-top: 1px solid #f0ece4; text-align: center; }
-  .nd-footer span { font-size: 11px; font-weight: 500; color: #b09070; }
+  .nd-footer span { font-size: 13px; font-weight: 500; color: #b09070; }
 
   /* ── USER DROPDOWN ── */
   .ud-menu {
@@ -120,9 +137,9 @@
   }
   .ud-menu.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
   .ud-header { padding: 14px 16px 10px; border-bottom: 1px solid #f0ece4; }
-  .ud-name { font-size: 13px; font-weight: 800; color: #2c1a00; }
-  .ud-role { font-size: 11px; color: #8b4a00; font-weight: 500; margin-top: 2px; }
-  .ud-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; cursor: pointer; transition: background 0.12s; font-size: 13px; font-weight: 500; color: #3a2000; }
+  .ud-name { font-size: 15px; font-weight: 800; color: #2c1a00; }
+  .ud-role { font-size: 15px; color: #8b4a00; font-weight: 500; margin-top: 2px; }
+  .ud-item { display: flex; align-items: center; gap: 10px; padding: 10px 16px; cursor: pointer; transition: background 0.12s; font-size: 15px; font-weight: 500; color: #3a2000; }
   .ud-item:hover { background: #fdf8ee; }
   .ud-item svg { width: 17px; height: 17px; color: #8b4a00; flex-shrink: 0; }
   .ud-sep { height: 1px; background: #f0ece4; margin: 4px 0; }
@@ -186,7 +203,7 @@
 
   <!-- Nav -->
   <div class="topbar-nav">
-    <div class="topbar-nav-item active">🏠 Trang Chủ</div>
+
   </div>
 
   <!-- Actions -->
@@ -205,17 +222,41 @@
         <span class="bell-badge" id="bellBadge">7</span>
       </button>
 
-      <div class="notify-dropdown" id="notifyDropdown">
+      <div class="notify-dropdown" id="notifyDropdown" onclick="event.stopPropagation()">
         <div class="nd-header">
-          <span class="nd-title">Thông Báo</span>
-          <span class="nd-mark-all" onclick="markAllRead()">Đánh dấu đã đọc</span>
+          <div class="nd-header-top">
+            <span class="nd-title">Thông Báo</span>
+            <div class="nd-settings-wrapper">
+              <button class="nd-settings-btn" id="ndSettingsBtn" onclick="toggleNdSettings(event)" title="Cài đặt">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+              </button>
+              <div class="nd-settings-menu" id="ndSettingsMenu">
+                <div class="nd-settings-item" onclick="markAllRead(); closeNdSettings()">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  Đánh dấu tất cả là đã đọc
+                </div>
+                <div class="nd-settings-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                  Cài đặt thông báo
+                </div>
+                <div class="nd-settings-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                  Mở thông báo
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="nd-tabs">
+            <span class="nd-tab active" id="tabAll" onclick="switchTab('all')">Tất Cả</span>
+            <span class="nd-tab" id="tabUnread" onclick="switchTab('unread')">Chưa Đọc <span id="unreadCount"></span></span>
+          </div>
         </div>
         <div class="nd-list" id="ndList"></div>
         <div class="nd-footer"><span>Chỉ hiện thông báo gần nhất</span></div>
       </div>
     </div>
 
-    <!-- User block + dropdown (border-left separator, no gear) -->
+    <!-- User block + dropdown -->
     <div class="user-wrapper" id="userWrapper">
       <div class="user-block" id="userBlock" onclick="toggleUserMenu(event)">
         <div class="avatar">PA</div>
@@ -226,7 +267,7 @@
         <svg class="user-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
       </div>
 
-      <div class="ud-menu" id="udMenu">
+      <div class="ud-menu" id="udMenu" onclick="event.stopPropagation()">
         <div class="ud-header">
           <div class="ud-name">Phan Tuấn Anh</div>
           <div class="ud-role">Ban Tri Sự · Trưởng Ban</div>
@@ -269,30 +310,77 @@
 <script>
 /* ── DATA ── */
 const N = [
-  {id:1, unread:true,  fresh:true,  group:'new',    avatarClass:'av-cu',   avatarLabel:'BCU', reaction:'🔔', time:'5 phút trước',    html:`<strong>Ban Cung Ứng</strong> đã nhắc đến bạn trong nội dung: <span class="ref">"Tổ chức Đại lễ Phật đản – Xác nhận số lượng hoa, nhang, đèn nến cần chuẩn bị..."</span>`},
-  {id:2, unread:true,  fresh:true,  group:'new',    avatarClass:'av-bhd',  avatarLabel:'BHĐ', reaction:'👍', time:'12 phút trước',   html:`<strong>Ban Hương Đăng</strong> đã thích thông báo bạn đăng: <span class="ref">"Quyết toán tháng 3 Âm Lịch – Nộp trước 15h00 ngày 24/3 Âm Lịch..."</span>`},
-  {id:3, unread:true,  fresh:true,  group:'new',    avatarClass:'av-multi',avatarLabel:'5+',  reaction:'👍', time:'25 phút trước',   html:`<strong>Ban Hương Đăng, Ban Quản Chúng</strong> và 3 ban khác đã thích thông báo bạn đăng: <span class="ref">"Báo cáo Quý I chưa nộp – Hạn chót 08h00 ngày 22/3 Âm Lịch..."</span>`},
-  {id:4, unread:false, fresh:false, group:'today',  avatarClass:'av-cu',   avatarLabel:'BCU', reaction:'💬', time:'1 giờ trước',     html:`<strong>Ban Cung Ứng – Minh Châu</strong> đã phản hồi trong công việc bạn phụ trách: <span class="ref">"Tổ chức Đại lễ Phật đản – đã xác nhận 500 bông hoa sen, 200 nến nhang trầm..."</span>`},
-  {id:5, unread:false, fresh:false, group:'today',  avatarClass:'av-bqc',  avatarLabel:'BQC', reaction:'📰', time:'2 giờ trước',     html:`<strong>Ban Quản Chúng</strong> đã thêm một tin tức mới: <span class="ref">"Ban Quản Chúng thông báo lịch phân công thời khóa quét sân chùa buổi sáng tháng 4 Âm Lịch..."</span>`},
-  {id:6, unread:false, fresh:false, group:'today',  avatarClass:'av-btc',  avatarLabel:'BTC', reaction:'🏷️',time:'3 giờ trước',     html:`<strong>Ban Tài Chính</strong> đã nhắc đến bạn trong một bình luận: <span class="ref">"@Ban Tri Sự - Phan Tuấn Anh – Nhờ anh xác nhận lại khoản chi dự trù cho Đại lễ Phật đản, hạn phản hồi trước 17h00 hôm nay."</span>`},
-  {id:7, unread:false, fresh:false, group:'today',  avatarClass:'av-bld',  avatarLabel:'BLĐ', reaction:'👍', time:'4 giờ trước',     html:`<strong>Ban Lãnh Đạo</strong> đã thích bình luận của bạn trong công việc: <span class="ref">"Phương án tổ chức Đại lễ Phật đản – Bố trí khuôn viên và phân luồng Phật tử."</span>`},
-  {id:8, unread:false, fresh:false, group:'before', avatarClass:'av-bmt',  avatarLabel:'BMT', reaction:'👍', time:'Hôm qua · 09:14', html:`<strong>Ban Môi Trường</strong> đã thích thông báo bạn đăng: <span class="ref">"Họp toàn ban chuẩn bị Lễ Phật Đản 2026 – 14h00 ngày 25/3 Âm Lịch..."</span>`},
-  {id:9, unread:false, fresh:false, group:'before', avatarClass:'av-bts',  avatarLabel:'BTS', reaction:'💬', time:'3 ngày trước',    html:`<strong>Ban Tri Sự</strong> đã phản hồi trong thông báo: <span class="ref">"Lịch họp tháng 4 Âm Lịch – Ban Tri Sự chủ trì, mời các ban trưởng tham dự."</span>`},
+  {id:1, unread:true,  fresh:true,  urgent:false, group:'new',    avatarClass:'av-cu',   avatarLabel:'BCU', reaction:'🔔', time:'5 phút trước',    html:`<strong>Ban Cung Ứng</strong> đã nhắc đến bạn trong nội dung: <span class="ref">"Tổ chức Đại lễ Phật đản – Xác nhận số lượng hoa, nhang, đèn nến cần chuẩn bị..."</span>`},
+  {id:2, unread:true,  fresh:true,  urgent:true,  group:'new',    avatarClass:'av-btc',  avatarLabel:'BTC', reaction:'🚨', time:'8 phút trước',    html:`<strong>Ban Tài Chính</strong> yêu cầu xác nhận khẩn: <span class="ref">"Khoản chi dự trù Đại lễ Phật đản – Cần phê duyệt trước 12h00 hôm nay, nếu không sẽ ảnh hưởng đến kế hoạch mua sắm."</span>`},
+  {id:3, unread:true,  fresh:true,  urgent:false, group:'new',    avatarClass:'av-bhd',  avatarLabel:'BHĐ', reaction:'👍', time:'12 phút trước',   html:`<strong>Ban Hương Đăng</strong> đã thích thông báo bạn đăng: <span class="ref">"Quyết toán tháng 3 Âm Lịch – Nộp trước 15h00 ngày 24/3 Âm Lịch..."</span>`},
+  {id:4, unread:true,  fresh:true,  urgent:true,  group:'new',    avatarClass:'av-bld',  avatarLabel:'BLĐ', reaction:'🚨', time:'20 phút trước',   html:`<strong>Ban Lãnh Đạo</strong> giao nhiệm vụ khẩn: <span class="ref">"Chuẩn bị báo cáo tổng kết tháng 3 Âm Lịch – Trình bày trong cuộc họp lúc 14h00 chiều nay."</span>`},
+  {id:5, unread:true,  fresh:true,  urgent:false, group:'new',    avatarClass:'av-multi',avatarLabel:'5+',  reaction:'👍', time:'25 phút trước',   html:`<strong>Ban Hương Đăng, Ban Quản Chúng</strong> và 3 ban khác đã thích thông báo bạn đăng: <span class="ref">"Báo cáo Quý I chưa nộp – Hạn chót 08h00 ngày 22/3 Âm Lịch..."</span>`},
+  {id:6, unread:false, fresh:false, urgent:false, group:'today',  avatarClass:'av-cu',   avatarLabel:'BCU', reaction:'💬', time:'1 giờ trước',     html:`<strong>Ban Cung Ứng – Minh Châu</strong> đã phản hồi trong công việc bạn phụ trách: <span class="ref">"Tổ chức Đại lễ Phật đản – đã xác nhận 500 bông hoa sen, 200 nến nhang trầm..."</span>`},
+  {id:7, unread:false, fresh:false, urgent:false, group:'today',  avatarClass:'av-bqc',  avatarLabel:'BQC', reaction:'📰', time:'2 giờ trước',     html:`<strong>Ban Quản Chúng</strong> đã thêm một tin tức mới: <span class="ref">"Ban Quản Chúng thông báo lịch phân công thời khóa quét sân chùa buổi sáng tháng 4 Âm Lịch..."</span>`},
+  {id:8, unread:false, fresh:false, urgent:false, group:'today',  avatarClass:'av-btc',  avatarLabel:'BTC', reaction:'🏷️',time:'3 giờ trước',     html:`<strong>Ban Tài Chính</strong> đã nhắc đến bạn trong một bình luận: <span class="ref">"@Ban Tri Sự - Phan Tuấn Anh – Nhờ anh xác nhận lại khoản chi dự trù cho Đại lễ Phật đản, hạn phản hồi trước 17h00 hôm nay."</span>`},
+  {id:9, unread:false, fresh:false, urgent:false, group:'today',  avatarClass:'av-bld',  avatarLabel:'BLĐ', reaction:'👍', time:'4 giờ trước',     html:`<strong>Ban Lãnh Đạo</strong> đã thích bình luận của bạn trong công việc: <span class="ref">"Phương án tổ chức Đại lễ Phật đản – Bố trí khuôn viên và phân luồng Phật tử."</span>`},
+  {id:10,unread:false, fresh:false, urgent:false, group:'before', avatarClass:'av-bmt',  avatarLabel:'BMT', reaction:'👍', time:'Hôm qua · 09:14', html:`<strong>Ban Môi Trường</strong> đã thích thông báo bạn đăng: <span class="ref">"Họp toàn ban chuẩn bị Lễ Phật Đản 2026 – 14h00 ngày 25/3 Âm Lịch..."</span>`},
+  {id:11,unread:false, fresh:false, urgent:false, group:'before', avatarClass:'av-bts',  avatarLabel:'BTS', reaction:'💬', time:'3 ngày trước',    html:`<strong>Ban Tri Sự</strong> đã phản hồi trong thông báo: <span class="ref">"Lịch họp tháng 4 Âm Lịch – Ban Tri Sự chủ trì, mời các ban trưởng tham dự."</span>`},
 ];
+
+/* ── SETTINGS MENU ── */
+let ndSettingsOpen = false;
+
+function toggleNdSettings(e) {
+  e.stopPropagation();
+  ndSettingsOpen = !ndSettingsOpen;
+  document.getElementById('ndSettingsMenu').classList.toggle('open', ndSettingsOpen);
+}
+
+function closeNdSettings() {
+  ndSettingsOpen = false;
+  document.getElementById('ndSettingsMenu').classList.remove('open');
+}
+
+/* ── TABS ── */
+let currentTab = 'all';
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('tabAll').classList.toggle('active', tab === 'all');
+  document.getElementById('tabUnread').classList.toggle('active', tab === 'unread');
+  render();
+}
 
 /* ── RENDER NOTIFY ── */
 function render() {
+  const source = currentTab === 'unread' ? N.filter(n => n.unread || n.urgent) : N;
+
+  const urgentItems = source.filter(n => n.group === 'new' && n.urgent);
   const groups = [
-    {key:'new',    label:'Mới'},
-    {key:'today',  label:'Hôm Nay'},
-    {key:'before', label:'Trước Đó'},
+    {key:'new',    label:'Mới',      items: source.filter(n => n.group === 'new' && !n.urgent)},
+    {key:'today',  label:'Hôm Nay',  items: source.filter(n => n.group === 'today')},
+    {key:'before', label:'Trước Đó', items: source.filter(n => n.group === 'before')},
   ];
+
   let html = '';
+
+  if (urgentItems.length) {
+    html += `<div class="nd-group-label urgent">🔴 Khẩn Gấp</div>`;
+    html += urgentItems.map(n => `
+      <div class="nd-item urgent-item" data-id="${n.id}">
+        <div class="nd-actor">
+          <div class="nd-actor-avatar ${n.avatarClass}">${n.avatarLabel}</div>
+          <div class="nd-reaction-badge">${n.reaction}</div>
+        </div>
+        <div class="nd-content">
+          <div class="nd-text">${n.html}</div>
+          <div class="nd-time fresh">${n.time}</div>
+        </div>
+        <div class="nd-dot red"></div>
+      </div>
+    `).join('');
+  }
+
   groups.forEach(g => {
-    const items = N.filter(n => n.group === g.key);
-    if (!items.length) return;
+    if (!g.items.length) return;
     html += `<div class="nd-group-label">${g.label}</div>`;
-    html += items.map(n => `
+    html += g.items.map(n => `
       <div class="nd-item ${n.unread ? 'unread' : ''}" data-id="${n.id}">
         <div class="nd-actor">
           <div class="nd-actor-avatar ${n.avatarClass}">${n.avatarLabel}</div>
@@ -306,20 +394,29 @@ function render() {
       </div>
     `).join('');
   });
+
+  if (!html) html = `<div style="padding:32px 16px; text-align:center; color:#b09070; font-size:12.5px;">Không có thông báo chưa đọc</div>`;
   document.getElementById('ndList').innerHTML = html;
 }
 
 function updateBadge() {
-  const c = N.filter(n => n.unread).length;
+  const c = N.filter(n => n.unread || n.urgent).length;
   const b = document.getElementById('bellBadge');
   b.textContent = c;
   b.style.display = c > 0 ? 'flex' : 'none';
+  const u = document.getElementById('unreadCount');
+  u.textContent = c > 0 ? c : '';
+  u.style.display = c > 0 ? 'inline' : 'none';
 }
 
 function markAllRead() {
-  N.forEach(n => { n.unread = false; n.fresh = false; });
+  N.forEach(n => { n.unread = false; n.fresh = false; n.urgent = false; });
+  currentTab = 'all';
+  document.getElementById('tabAll').classList.add('active');
+  document.getElementById('tabUnread').classList.remove('active');
   render(); updateBadge();
 }
+
 
 /* ── DROPDOWNS ── */
 let bellOpen = false;
@@ -327,7 +424,6 @@ let udOpen   = false;
 
 function toggleNotify(e) {
   e.stopPropagation();
-  // close user menu if open
   if (udOpen) {
     udOpen = false;
     document.getElementById('udMenu').classList.remove('open');
@@ -340,7 +436,6 @@ function toggleNotify(e) {
 
 function toggleUserMenu(e) {
   e.stopPropagation();
-  // close bell if open
   if (bellOpen) {
     bellOpen = false;
     document.getElementById('notifyDropdown').classList.remove('open');
@@ -352,11 +447,12 @@ function toggleUserMenu(e) {
 }
 
 document.addEventListener('click', () => {
-  bellOpen = false; udOpen = false;
+  bellOpen = false; udOpen = false; ndSettingsOpen = false;
   document.getElementById('notifyDropdown').classList.remove('open');
   document.getElementById('bellBtn').classList.remove('active');
   document.getElementById('udMenu').classList.remove('open');
   document.getElementById('userBlock').classList.remove('open');
+  document.getElementById('ndSettingsMenu').classList.remove('open');
 });
 
 /* ── LOGOUT ── */
