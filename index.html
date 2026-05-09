@@ -163,7 +163,7 @@
   .toast { position: fixed; top: 24px; left: 50%; transform: translateX(-50%) translateY(-80px); background: #2d6a4f; color: white; padding: 12px 24px; border-radius: 10px; font-size: 13px; font-weight: 700; font-family: 'Be Vietnam Pro', sans-serif; z-index: 600; transition: transform 0.35s cubic-bezier(.34,1.56,.64,1); box-shadow: 0 4px 20px rgba(0,0,0,0.18); display: flex; align-items: center; gap: 8px; }
   .toast.show { transform: translateX(-50%) translateY(0); }
 
-  /* avatar colours */
+  /* ── AVATAR COLOURS ── */
   .av-cu  { background: #2980b9; }
   .av-bhd { background: #8e44ad; }
   .av-bts { background: #c0392b; }
@@ -172,6 +172,8 @@
   .av-btc { background: #e67e22; }
   .av-bld { background: #f0c840; color: #5a2d00 !important; }
   .av-multi { background: linear-gradient(135deg, #f39c12 0%, #e74c3c 100%); }
+  /* Sư Phụ / BLĐ — vàng kem nhạt */
+  .av-sp  { background: #f5e6a3; color: #5a2d00 !important; }
 </style>
 </head>
 <body>
@@ -202,9 +204,7 @@
   </div>
 
   <!-- Nav -->
-  <div class="topbar-nav">
-
-  </div>
+  <div class="topbar-nav"></div>
 
   <!-- Actions -->
   <div class="topbar-actions">
@@ -310,17 +310,76 @@
 <script>
 /* ── DATA ── */
 const N = [
-  {id:1, unread:true,  fresh:true,  urgent:false, group:'new',    avatarClass:'av-cu',   avatarLabel:'BCU', reaction:'🔔', time:'5 phút trước',    html:`<strong>Ban Cung Ứng</strong> đã nhắc đến bạn trong nội dung: <span class="ref">"Tổ chức Đại lễ Phật đản – Xác nhận số lượng hoa, nhang, đèn nến cần chuẩn bị..."</span>`},
-  {id:2, unread:true,  fresh:true,  urgent:true,  group:'new',    avatarClass:'av-btc',  avatarLabel:'BTC', reaction:'🚨', time:'8 phút trước',    html:`<strong>Ban Tài Chính</strong> yêu cầu xác nhận khẩn: <span class="ref">"Khoản chi dự trù Đại lễ Phật đản – Cần phê duyệt trước 12h00 hôm nay, nếu không sẽ ảnh hưởng đến kế hoạch mua sắm."</span>`},
-  {id:3, unread:true,  fresh:true,  urgent:false, group:'new',    avatarClass:'av-bhd',  avatarLabel:'BHĐ', reaction:'👍', time:'12 phút trước',   html:`<strong>Ban Hương Đăng</strong> đã thích thông báo bạn đăng: <span class="ref">"Quyết toán tháng 3 Âm Lịch – Nộp trước 15h00 ngày 24/3 Âm Lịch..."</span>`},
-  {id:4, unread:true,  fresh:true,  urgent:true,  group:'new',    avatarClass:'av-bld',  avatarLabel:'BLĐ', reaction:'🚨', time:'20 phút trước',   html:`<strong>Ban Lãnh Đạo</strong> giao nhiệm vụ khẩn: <span class="ref">"Chuẩn bị báo cáo tổng kết tháng 3 Âm Lịch – Trình bày trong cuộc họp lúc 14h00 chiều nay."</span>`},
-  {id:5, unread:true,  fresh:true,  urgent:false, group:'new',    avatarClass:'av-multi',avatarLabel:'5+',  reaction:'👍', time:'25 phút trước',   html:`<strong>Ban Hương Đăng, Ban Quản Chúng</strong> và 3 ban khác đã thích thông báo bạn đăng: <span class="ref">"Báo cáo Quý I chưa nộp – Hạn chót 08h00 ngày 22/3 Âm Lịch..."</span>`},
-  {id:6, unread:false, fresh:false, urgent:false, group:'today',  avatarClass:'av-cu',   avatarLabel:'BCU', reaction:'💬', time:'1 giờ trước',     html:`<strong>Ban Cung Ứng – Minh Châu</strong> đã phản hồi trong công việc bạn phụ trách: <span class="ref">"Tổ chức Đại lễ Phật đản – đã xác nhận 500 bông hoa sen, 200 nến nhang trầm..."</span>`},
-  {id:7, unread:false, fresh:false, urgent:false, group:'today',  avatarClass:'av-bqc',  avatarLabel:'BQC', reaction:'📰', time:'2 giờ trước',     html:`<strong>Ban Quản Chúng</strong> đã thêm một tin tức mới: <span class="ref">"Ban Quản Chúng thông báo lịch phân công thời khóa quét sân chùa buổi sáng tháng 4 Âm Lịch..."</span>`},
-  {id:8, unread:false, fresh:false, urgent:false, group:'today',  avatarClass:'av-btc',  avatarLabel:'BTC', reaction:'🏷️',time:'3 giờ trước',     html:`<strong>Ban Tài Chính</strong> đã nhắc đến bạn trong một bình luận: <span class="ref">"@Ban Tri Sự - Phan Tuấn Anh – Nhờ anh xác nhận lại khoản chi dự trù cho Đại lễ Phật đản, hạn phản hồi trước 17h00 hôm nay."</span>`},
-  {id:9, unread:false, fresh:false, urgent:false, group:'today',  avatarClass:'av-bld',  avatarLabel:'BLĐ', reaction:'👍', time:'4 giờ trước',     html:`<strong>Ban Lãnh Đạo</strong> đã thích bình luận của bạn trong công việc: <span class="ref">"Phương án tổ chức Đại lễ Phật đản – Bố trí khuôn viên và phân luồng Phật tử."</span>`},
-  {id:10,unread:false, fresh:false, urgent:false, group:'before', avatarClass:'av-bmt',  avatarLabel:'BMT', reaction:'👍', time:'Hôm qua · 09:14', html:`<strong>Ban Môi Trường</strong> đã thích thông báo bạn đăng: <span class="ref">"Họp toàn ban chuẩn bị Lễ Phật Đản 2026 – 14h00 ngày 25/3 Âm Lịch..."</span>`},
-  {id:11,unread:false, fresh:false, urgent:false, group:'before', avatarClass:'av-bts',  avatarLabel:'BTS', reaction:'💬', time:'3 ngày trước',    html:`<strong>Ban Tri Sự</strong> đã phản hồi trong thông báo: <span class="ref">"Lịch họp tháng 4 Âm Lịch – Ban Tri Sự chủ trì, mời các ban trưởng tham dự."</span>`},
+  /* ── KHẨN GẤP ── */
+  {id:1,  unread:true,  fresh:true,  urgent:true,  group:'new',
+   avatarClass:'av-bld', avatarLabel:'BLĐ', reaction:'🚨', time:'5 phút trước',
+   html:`<strong>Ban Lãnh Đạo</strong> yêu cầu xác nhận khẩn: <span class="ref">"Khoản chi dự trù Đại lễ Phật đản – Cần phê duyệt trước 12h00 hôm nay, nếu không sẽ ảnh hưởng đến kế hoạch mua sắm."</span>`},
+
+  {id:2,  unread:true,  fresh:true,  urgent:true,  group:'new',
+   avatarClass:'av-sp',  avatarLabel:'SP',  reaction:'🚨', time:'10 phút trước',
+   html:`<strong>Sư Phụ</strong> đã có chỉ dạy cho công việc <span class="ref">"Phương án tổ chức Đại lễ Phật đản 2026 – Bố trí khuôn viên và phân luồng Phật tử."</span>`},
+
+  /* ── MỚI ── */
+  /* Quy tắc 1 – Nhắc tới Ban */
+  {id:3,  unread:true,  fresh:true,  urgent:false, group:'new',
+   avatarClass:'av-cu',  avatarLabel:'BCU', reaction:'🔔', time:'15 phút trước',
+   html:`<strong>Ban Cung Ứng</strong> đã nhắc đến <strong>Ban Tri Sự</strong> trong công việc <span class="ref">"Tổ chức Đại lễ Phật đản 2026 – Xác nhận số lượng hoa, nhang, đèn nến cần chuẩn bị."</span>`},
+
+  /* Quy tắc 3 – Giao Ban thực hiện */
+  {id:4,  unread:true,  fresh:true,  urgent:false, group:'new',
+   avatarClass:'av-bld', avatarLabel:'BLĐ', reaction:'📋', time:'20 phút trước',
+   html:`<span class="ref">"Lập kế hoạch tổng thể Lễ Vu Lan 2026"</span> có trạng thái <strong>Quan Trọng</strong> đã được giao cho <strong>Ban Tri Sự</strong> phụ trách thực hiện.`},
+
+  /* Quy tắc 4 – Giao Ban đầu mối */
+  {id:5,  unread:true,  fresh:true,  urgent:false, group:'new',
+   avatarClass:'av-bld', avatarLabel:'BLĐ', reaction:'🎯', time:'22 phút trước',
+   html:`<span class="ref">"Lập kế hoạch tổng thể Lễ Vu Lan 2026"</span> có trạng thái <strong>Quan Trọng</strong> đã được giao cho <strong>Ban Tri Sự</strong> phụ trách Đầu mối.`},
+
+  /* Quy tắc 5 – Giao Ban phối hợp */
+  {id:6,  unread:true,  fresh:true,  urgent:false, group:'new',
+   avatarClass:'av-bld', avatarLabel:'BLĐ', reaction:'🤝', time:'24 phút trước',
+   html:`<span class="ref">"Lập kế hoạch tổng thể Lễ Vu Lan 2026"</span> có trạng thái <strong>Quan Trọng</strong> đã được giao cho <strong>Ban Hương Đăng</strong> phối hợp cùng <strong>Ban Tri Sự</strong>.`},
+
+  /* Quy tắc 6 – Ý kiến BLĐ gửi Ban thực hiện */
+  {id:7,  unread:true,  fresh:true,  urgent:false, group:'new',
+   avatarClass:'av-bld', avatarLabel:'BLĐ', reaction:'💬', time:'28 phút trước',
+   html:`<strong>Ban Lãnh Đạo</strong> đã có ý kiến cho công việc <span class="ref">"Quyết toán Quý I năm 2026 – Tổng hợp thu chi các ban."</span>`},
+
+  /* Quy tắc 7 – Ý kiến Ban khác gửi Ban thực hiện (đã sửa nội dung) */
+  {id:8,  unread:true,  fresh:true,  urgent:false, group:'new',
+   avatarClass:'av-btc', avatarLabel:'BTC', reaction:'💬', time:'32 phút trước',
+   html:`<strong>Ban Tài Chính</strong> đã có phản hồi trong công việc <span class="ref">"Quyết toán Quý I năm 2026 – Tổng hợp thu chi các ban."</span>`},
+
+  /* Quy tắc B – Ban thực hiện phản hồi ngược → BLĐ/đầu mối */
+  {id:9,  unread:true,  fresh:true,  urgent:false, group:'new',
+   avatarClass:'av-bts', avatarLabel:'BTS', reaction:'↩️', time:'35 phút trước',
+   html:`<strong>Ban Tri Sự</strong> đã gửi đề xuất giải quyết trong công việc <span class="ref">"Quyết toán Quý I năm 2026 – Tổng hợp thu chi các ban."</span>`},
+
+  /* ── HÔM NAY ── */
+  {id:10, unread:false, fresh:false, urgent:false, group:'today',
+   avatarClass:'av-bhd', avatarLabel:'BHĐ', reaction:'👍', time:'1 giờ trước',
+   html:`<strong>Ban Hương Đăng</strong> đã thích thông báo bạn đăng: <span class="ref">"Quyết toán tháng 3 Âm Lịch – Nộp trước 15h00 ngày 24/3 Âm Lịch."</span>`},
+
+  {id:11, unread:false, fresh:false, urgent:false, group:'today',
+   avatarClass:'av-bqc', avatarLabel:'BQC', reaction:'📰', time:'2 giờ trước',
+   html:`<strong>Ban Quản Chúng</strong> đã thêm một tin tức mới: <span class="ref">"Lịch phân công thời khóa quét sân chùa buổi sáng tháng 4 Âm Lịch."</span>`},
+
+  {id:12, unread:false, fresh:false, urgent:false, group:'today',
+   avatarClass:'av-btc', avatarLabel:'BTC', reaction:'🏷️', time:'3 giờ trước',
+   html:`<strong>Ban Tài Chính</strong> đã nhắc đến <strong>Ban Tri Sự</strong> trong một bình luận: <span class="ref">"@Ban Tri Sự – Nhờ xác nhận lại khoản chi dự trù cho Đại lễ Phật đản, hạn phản hồi trước 17h00 hôm nay."</span>`},
+
+  /* ── TRƯỚC ĐÓ ── */
+  {id:13, unread:false, fresh:false, urgent:false, group:'before',
+   avatarClass:'av-bmt', avatarLabel:'BMT', reaction:'👍', time:'Hôm qua · 09:14',
+   html:`<strong>Ban Môi Trường</strong> đã thích thông báo bạn đăng: <span class="ref">"Họp toàn ban chuẩn bị Lễ Phật Đản 2026 – 14h00 ngày 25/3 Âm Lịch."</span>`},
+
+  {id:14, unread:false, fresh:false, urgent:false, group:'before',
+   avatarClass:'av-multi', avatarLabel:'5+', reaction:'👍', time:'2 ngày trước',
+   html:`<strong>Ban Hương Đăng, Ban Quản Chúng</strong> và 3 ban khác đã thích thông báo bạn đăng: <span class="ref">"Báo cáo Quý I chưa nộp – Hạn chót 08h00 ngày 22/3 Âm Lịch."</span>`},
+
+  {id:15, unread:false, fresh:false, urgent:false, group:'before',
+   avatarClass:'av-bts', avatarLabel:'BTS', reaction:'💬', time:'3 ngày trước',
+   html:`<strong>Ban Tri Sự</strong> đã phản hồi trong thông báo: <span class="ref">"Lịch họp tháng 4 Âm Lịch – Ban Tri Sự chủ trì, mời các ban trưởng tham dự."</span>`},
 ];
 
 /* ── SETTINGS MENU ── */
@@ -417,7 +476,6 @@ function markAllRead() {
   render(); updateBadge();
 }
 
-
 /* ── DROPDOWNS ── */
 let bellOpen = false;
 let udOpen   = false;
@@ -473,7 +531,7 @@ function doLogout() {
 }
 
 /* ── DATETIME ── */
-const LUNAR = {'2026-05-08':{d:21,m:3},'2026-05-09':{d:22,m:3}};
+const LUNAR = {'2026-05-08':{d:21,m:3},'2026-05-09':{d:22,m:3},'2026-05-10':{d:23,m:3}};
 const THU   = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
 (function() {
   const now = new Date();
