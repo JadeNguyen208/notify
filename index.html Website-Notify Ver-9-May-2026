@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topbar Notify</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green-dark: #1a4a2e; --green-main: #2d6a4f;
+    --tb-bg: #fad96a; --tb-border: #f0c840;
+    --tb-logo-text: #7a3a00; --tb-text: #5a2d00;
+    --tb-lunar: #8b4a00; --tb-sep: rgba(90,45,0,0.18);
+    --burgundy: #6b1a1a;
+  }
+  body { font-family: 'Be Vietnam Pro', sans-serif; background: #f5f0e8; min-height: 100vh; }
+  .topbar {
+    background: var(--tb-bg); border-bottom: 2.5px solid var(--tb-border);
+    display: flex; align-items: center; padding: 0 20px; height: 56px;
+    position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(200,140,0,0.18);
+  }
+  .topbar-brand { display: flex; align-items: center; gap: 10px; padding-right: 18px; border-right: 1.5px solid var(--tb-sep); flex-shrink: 0; }
+  .logo-icon { width: 32px; height: 32px; border-radius: 7px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 1px 4px rgba(90,45,0,0.25); flex-shrink: 0; }
+  .app-name { font-size: 14px; font-weight: 800; color: var(--burgundy); white-space: nowrap; }
+  .topbar-datetime { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 18px; border-right: 1.5px solid var(--tb-sep); line-height: 1.25; flex-shrink: 0; }
+  .topbar-datetime .dt-duong { font-size: 12px; font-weight: 700; color: var(--tb-text); white-space: nowrap; }
+  .topbar-datetime .dt-am { font-size: 10.5px; color: var(--tb-lunar); font-weight: 500; white-space: nowrap; }
+  .topbar-nav { display: flex; align-items: center; gap: 2px; padding: 0 12px; flex: 1; }
+  .topbar-nav-item { padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 12.5px; font-weight: 600; color: var(--tb-text); white-space: nowrap; }
+  .topbar-nav-item.active { background: rgba(255,255,255,0.5); color: var(--burgundy); }
+  .topbar-actions { display: flex; align-items: center; gap: 6px; margin-left: auto; flex-shrink: 0; }
+  .tb-action { padding: 6px 13px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; color: var(--tb-text); border: 1.5px solid rgba(90,45,0,0.22); background: rgba(255,255,255,0.3); font-family: inherit; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
+  .tb-action.primary { background: var(--green-main); border-color: var(--green-main); color: white; font-weight: 700; }
+
+  /* ICON BTN (chuông + bánh răng) */
+  .icon-btn { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.3); border: 1.5px solid rgba(90,45,0,0.22); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; flex-shrink: 0; }
+  .icon-btn:hover, .icon-btn.active { background: rgba(255,255,255,0.55); border-color: rgba(90,45,0,0.4); }
+  .icon-btn svg { width: 18px; height: 18px; color: var(--tb-text); }
+
+  /* USER BLOCK */
+  .user-block { display: flex; align-items: center; gap: 8px; padding: 4px 8px; border-radius: 8px; cursor: pointer; border-left: 1.5px solid var(--tb-sep); padding-left: 12px; margin-left: 2px; }
+  .avatar { width: 34px; height: 34px; background: var(--tb-logo-text); color: var(--tb-bg); border-radius: 8px; font-weight: 800; font-size: 13px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .user-info { display: flex; flex-direction: column; line-height: 1.2; }
+  .user-info .user-name { font-size: 11px; font-weight: 700; color: var(--tb-text); white-space: nowrap; }
+  .user-info .user-role { font-size: 9.5px; color: var(--tb-lunar); font-weight: 500; white-space: nowrap; }
+
+  /* BELL */
+  .bell-wrapper { position: relative; flex-shrink: 0; }
+  .bell-badge { position: absolute; top: -5px; right: -5px; background: #c0392b; color: white; font-size: 9px; font-weight: 800; min-width: 16px; height: 16px; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 0 3px; border: 2px solid var(--tb-bg); font-family: 'Be Vietnam Pro', sans-serif; }
+
+  /* DROPDOWN */
+  .notify-dropdown { position: absolute; top: calc(100% + 10px); right: 0; width: 370px; background: #fff; border-radius: 14px; box-shadow: 0 8px 40px rgba(0,0,0,0.16), 0 2px 8px rgba(0,0,0,0.07); border: 1px solid rgba(0,0,0,0.07); overflow: hidden; z-index: 200; opacity: 0; transform: translateY(-8px) scale(0.97); transform-origin: top right; pointer-events: none; transition: opacity 0.18s ease, transform 0.18s ease; }
+  .notify-dropdown.open { opacity: 1; transform: translateY(0) scale(1); pointer-events: all; }
+  .nd-header { display: flex; align-items: center; justify-content: space-between; padding: 13px 16px 10px; border-bottom: 1px solid #f0ece4; }
+  .nd-title { font-size: 15px; font-weight: 800; color: #2c1a00; }
+  .nd-mark-all { font-size: 11px; font-weight: 600; color: var(--green-main); cursor: pointer; padding: 3px 7px; border-radius: 5px; transition: background 0.12s; }
+  .nd-mark-all:hover { background: #e8f5ee; }
+  .nd-list { max-height: 480px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #e0d5c0 transparent; }
+  .nd-group-label { padding: 8px 14px 4px; font-size: 10px; font-weight: 800; color: #b09070; letter-spacing: 0.8px; text-transform: uppercase; background: #faf7f2; border-bottom: 1px solid #f0ece4; }
+  .nd-item { display: flex; align-items: flex-start; gap: 11px; padding: 12px 14px; border-bottom: 1px solid #f5f0e8; transition: background 0.12s; position: relative; cursor: default; }
+  .nd-item:last-child { border-bottom: none; }
+  .nd-item:hover { background: #fdf8ee; }
+  .nd-item.unread { background: #fffcf0; }
+  .nd-item.unread:hover { background: #fef6d6; }
+  .nd-actor { position: relative; flex-shrink: 0; }
+  .nd-actor-avatar { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 800; color: white; letter-spacing: 0.2px; }
+  .nd-reaction-badge { position: absolute; bottom: -4px; right: -4px; width: 20px; height: 20px; border-radius: 50%; background: white; border: 2px solid white; display: flex; align-items: center; justify-content: center; font-size: 11px; line-height: 1; box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+  .nd-content { flex: 1; min-width: 0; }
+  .nd-text { font-size: 12.5px; color: #2c1a00; line-height: 1.5; font-weight: 400; }
+  .nd-text strong { font-weight: 700; }
+  .nd-text .ref { color: #7a5020; font-weight: 600; font-style: italic; }
+  .nd-time { margin-top: 3px; font-size: 10.5px; color: #a08060; font-weight: 500; }
+  .nd-time.fresh { color: var(--green-main); font-weight: 700; }
+  .nd-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green-main); flex-shrink: 0; margin-top: 18px; }
+  .nd-footer { padding: 9px 16px; border-top: 1px solid #f0ece4; text-align: center; }
+  .nd-footer span { font-size: 11px; font-weight: 500; color: #b09070; }
+  .av-cu  { background: #2980b9; }
+  .av-bhd { background: #8e44ad; }
+  .av-bts { background: #c0392b; }
+  .av-bqc { background: #16a085; }
+  .av-bmt { background: #27ae60; }
+  .av-btc { background: #e67e22; }
+  .av-bld { background: #f0c840; color: #5a2d00 !important; }
+  .av-multi { background: linear-gradient(135deg, #f39c12 0%, #e74c3c 100%); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">
+    <div class="logo-icon">
+      <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+        <rect width="42" height="42" rx="8" fill="#7a3a00"/>
+        <rect x="12" y="26" width="18" height="10" fill="#fad96a"/>
+        <rect x="18" y="28" width="6" height="8" rx="1" fill="#7a3a00"/>
+        <polygon points="6,26 21,17 36,26" fill="#fad96a"/>
+        <polygon points="12,19 21,12 30,19" fill="#f0d080"/>
+        <polygon points="18,12 21,6 24,12" fill="#ffffff"/>
+        <rect x="13" y="26" width="2" height="10" fill="#c9a84c"/>
+        <rect x="27" y="26" width="2" height="10" fill="#c9a84c"/>
+      </svg>
+    </div>
+    <span class="app-name">Quản Lý Công Việc</span>
+  </div>
+
+  <div class="topbar-datetime">
+    <span class="dt-duong" id="dtDuong"></span>
+    <span class="dt-am" id="dtAm"></span>
+  </div>
+
+  <div class="topbar-nav">
+    <div class="topbar-nav-item active">🏠 Trang Chủ</div>
+  </div>
+
+  <div class="topbar-actions">
+
+    <!-- 1. Thông Báo Toàn Chùa -->
+    <button class="tb-action">📢 Thông Báo Toàn Chùa</button>
+
+    <!-- 2. Chuông thông báo -->
+    <div class="bell-wrapper" id="bellWrapper">
+      <button class="icon-btn" id="bellBtn" onclick="toggleNotify(event)" title="Thông báo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+        </svg>
+        <span class="bell-badge" id="bellBadge">7</span>
+      </button>
+
+      <div class="notify-dropdown" id="notifyDropdown">
+        <div class="nd-header">
+          <span class="nd-title">Thông Báo</span>
+          <span class="nd-mark-all" onclick="markAllRead()">Đánh dấu đã đọc</span>
+        </div>
+        <div class="nd-list" id="ndList"></div>
+        <div class="nd-footer"><span>Chỉ hiện thông báo gần nhất</span></div>
+      </div>
+    </div>
+
+    <!-- 3. Cài đặt -->
+    <button class="icon-btn" title="Cài đặt">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+    </button>
+
+    <!-- 4. User block: avatar PA + tên/chức vụ cạnh nhau -->
+    <div class="user-block">
+      <div class="avatar">PA</div>
+      <div class="user-info">
+        <span class="user-name">Phan Tuấn Anh</span>
+        <span class="user-role">Ban Tri Sự · Trưởng Ban</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<script>
+const N = [
+  {id:1,unread:true,fresh:true,group:'today',avatarClass:'av-cu',avatarLabel:'BCU',reaction:'🔔',time:'5 phút trước',html:`<strong>Ban Cung Ứng</strong> đã nhắc đến bạn trong nội dung: <span class="ref">"Tổ chức Đại lễ Phật đản – Xác nhận số lượng hoa, nhang, đèn nến cần chuẩn bị..."</span>`},
+  {id:2,unread:true,fresh:true,group:'today',avatarClass:'av-bhd',avatarLabel:'BHĐ',reaction:'👍',time:'12 phút trước',html:`<strong>Ban Hương Đăng</strong> đã thích thông báo bạn đăng: <span class="ref">"Quyết toán tháng 3 Âm Lịch – Nộp trước 15h00 ngày 24/3 Âm Lịch..."</span>`},
+  {id:3,unread:true,fresh:true,group:'today',avatarClass:'av-multi',avatarLabel:'5+',reaction:'👍',time:'25 phút trước',html:`<strong>Ban Hương Đăng, Ban Quản Chúng</strong> và 3 ban khác đã thích thông báo bạn đăng: <span class="ref">"Báo cáo Quý I chưa nộp – Hạn chót 08h00 ngày 22/3 Âm Lịch..."</span>`},
+  {id:4,unread:true,fresh:true,group:'today',avatarClass:'av-cu',avatarLabel:'BCU',reaction:'💬',time:'1 giờ trước',html:`<strong>Ban Cung Ứng – Minh Châu</strong> đã phản hồi trong công việc bạn phụ trách: <span class="ref">"Tổ chức Đại lễ Phật đản – đã xác nhận 500 bông hoa sen, 200 nến nhang trầm..."</span>`},
+  {id:5,unread:true,fresh:true,group:'today',avatarClass:'av-bqc',avatarLabel:'BQC',reaction:'📰',time:'2 giờ trước',html:`<strong>Ban Quản Chúng</strong> đã thêm một tin tức mới: <span class="ref">"Ban Quản Chúng thông báo lịch phân công thời khóa quét sân chùa buổi sáng tháng 4 Âm Lịch..."</span>`},
+  {id:6,unread:true,fresh:true,group:'today',avatarClass:'av-btc',avatarLabel:'BTC',reaction:'🏷️',time:'3 giờ trước',html:`<strong>Ban Tài Chính</strong> đã nhắc đến bạn trong một bình luận: <span class="ref">"@Ban Tri Sự - Phan Tuấn Anh – Nhờ anh xác nhận lại khoản chi dự trù cho Đại lễ Phật đản, hạn phản hồi trước 17h00 hôm nay."</span>`},
+  {id:7,unread:true,fresh:true,group:'today',avatarClass:'av-bld',avatarLabel:'BLĐ',reaction:'👍',time:'4 giờ trước',html:`<strong>Ban Lãnh Đạo</strong> đã thích bình luận của bạn trong công việc: <span class="ref">"Phương án tổ chức Đại lễ Phật đản – Bố trí khuôn viên và phân luồng Phật tử."</span>`},
+  {id:9,unread:false,fresh:false,group:'before',avatarClass:'av-bmt',avatarLabel:'BMT',reaction:'👍',time:'Hôm qua · 09:14',html:`<strong>Ban Môi Trường</strong> đã thích thông báo bạn đăng: <span class="ref">"Họp toàn ban chuẩn bị Lễ Phật Đản 2026 – 14h00 ngày 25/3 Âm Lịch..."</span>`},
+];
+
+function render() {
+  const groups = [{key:'today',label:'🕐 Hôm Nay'},{key:'before',label:'📅 Trước Đó'}];
+  let html = '';
+  groups.forEach(g => {
+    const items = N.filter(n => n.group === g.key);
+    if (!items.length) return;
+    html += `<div class="nd-group-label">${g.label}</div>`;
+    html += items.map(n => `
+      <div class="nd-item ${n.unread?'unread':''}" data-id="${n.id}">
+        <div class="nd-actor">
+          <div class="nd-actor-avatar ${n.avatarClass}">${n.avatarLabel}</div>
+          <div class="nd-reaction-badge">${n.reaction}</div>
+        </div>
+        <div class="nd-content">
+          <div class="nd-text">${n.html}</div>
+          <div class="nd-time ${n.fresh?'fresh':''}">${n.time}</div>
+        </div>
+        ${n.unread ? '<div class="nd-dot"></div>' : ''}
+      </div>
+    `).join('');
+  });
+  document.getElementById('ndList').innerHTML = html;
+}
+
+function updateBadge() {
+  const c = N.filter(n=>n.unread).length;
+  const b = document.getElementById('bellBadge');
+  b.textContent = c; b.style.display = c > 0 ? 'flex' : 'none';
+}
+
+function markAllRead() {
+  N.forEach(n=>{ n.unread=false; n.fresh=false; });
+  render(); updateBadge();
+}
+
+let open = false;
+function toggleNotify(e) {
+  e.stopPropagation(); open = !open;
+  document.getElementById('notifyDropdown').classList.toggle('open', open);
+  document.getElementById('bellBtn').classList.toggle('active', open);
+}
+document.addEventListener('click', e => {
+  if (!document.getElementById('bellWrapper').contains(e.target)) {
+    open = false;
+    document.getElementById('notifyDropdown').classList.remove('open');
+    document.getElementById('bellBtn').classList.remove('active');
+  }
+});
+
+const LUNAR = {'2026-05-08':{d:21,m:3},'2026-05-09':{d:22,m:3}};
+const THU = ['Chủ Nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
+(function() {
+  const now = new Date();
+  const dd = String(now.getDate()).padStart(2,'0'), mm = String(now.getMonth()+1).padStart(2,'0');
+  document.getElementById('dtDuong').textContent = `${THU[now.getDay()]}, ${dd}/${mm}/${now.getFullYear()}`;
+  const l = LUNAR[now.toISOString().split('T')[0]];
+  if (l) document.getElementById('dtAm').textContent = `🌙 ${l.d} tháng ${l.m} Âm Lịch`;
+})();
+
+render(); updateBadge();
+</script>
+
+</body>
+</html>
+
+
