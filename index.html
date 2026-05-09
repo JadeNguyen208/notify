@@ -19,7 +19,7 @@
   /* ── TOPBAR ── */
   .topbar {
     background: var(--tb-bg); border-bottom: 2.5px solid var(--tb-border);
-    display: flex; align-items: center; padding: 0 20px; height: 56px;
+    display: flex; align-items: center; padding: 0 0 0 20px; height: 56px;
     position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(200,140,0,0.18);
   }
   .topbar-brand { display: flex; align-items: center; gap: 10px; padding-right: 18px; border-right: 1.5px solid var(--tb-sep); flex-shrink: 0; }
@@ -30,7 +30,7 @@
   .topbar-datetime .dt-duong { font-size: 15px; font-weight: 700; color: var(--tb-text); white-space: nowrap; }
   .topbar-datetime .dt-am   { font-size: 15px; color: var(--tb-lunar); font-weight: 500; white-space: nowrap; }
 
-  .topbar-nav { display: flex; align-items: center; gap: 2px; padding: 0 12px; flex: 1; }
+  .topbar-nav { display: flex; align-items: center; gap: 2px; padding: 0; flex: 0; }
   .topbar-nav-item { padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 15px; font-weight: 600; color: var(--tb-text); white-space: nowrap; }
   .topbar-nav-item.active { background: rgba(255,255,255,0.5); color: var(--burgundy); }
 
@@ -61,7 +61,7 @@
   .user-wrapper { position: relative; flex-shrink: 0; }
   .user-block {
     display: flex; align-items: center; gap: 8px;
-    padding: 5px 8px 5px 12px;
+    padding: 5px 0 5px 12px;
     cursor: pointer;
     border-left: 1.5px solid var(--tb-sep);
     margin-left: 2px;
